@@ -1,6 +1,6 @@
 {
     "name": "snapshotjs",
-    "version": "1.0.02",
+    "version": "1.0.03",
     "description": "a web snapshot util",
     "main": "index.js",
     "scripts": {
