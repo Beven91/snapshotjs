@@ -12,9 +12,9 @@ describe('snapshot', function() {
             .then(function(data) {
                 console.log('\t' + JSON.stringify(data));
             })
-            .catch(function() {
-                console.log("失败");
-                assert.equal(false, true);
+            .catch(function(err) {
+                console.error(err);
+                return err;
             });
     });
 });

@@ -32,6 +32,7 @@ Capture.prototype.capture = function(url, file) {
         width: options.width || 1920,
         height: options.height || 1080
     }
+    page.remoteUrl = url;
     page.open(url, onPageComplete(page, file, this.onPageComplete.bind(this)));
 }
 
@@ -43,11 +44,6 @@ Capture.prototype.capture = function(url, file) {
 Capture.prototype.onPageComplete = function(page, file) {
     var options = this.options;
     var clipRect = getBoundingClientRect(page, 'body');
-    var result = {
-        status: 1,
-        message: '成功',
-        outfile: file
-    };
     if (!clipRect) {
         throw new Error('Error: Can\'t find selector: ' + selector);
     }
@@ -57,12 +53,11 @@ Capture.prototype.onPageComplete = function(page, file) {
         width: clipRect.width,
         height: clipRect.height
     };
-    result.rect = page.clipRect;
     page.render(file, {
         quality: options.quality || 0.8,
         format: options.format || 'png'
     });
-    console.log(JSON.stringify(result));
+    console.log('saved file:' + file);
 }
 
 /**
@@ -75,9 +70,11 @@ function onPageComplete(page, file, handler) {
     return function(status) {
         try {
             if (status !== 'success') {
+                console.error("-----ERROR 页面:" + page.remoteUrl + "载入失败");
                 page.close();
             } else {
-                if ('complete' === page.evaluate(readyStateHandler)) {
+                var readyState = page.evaluate(readyStateHandler);
+                if ('complete' === readyState) {
                     handler(page, file);
                 } else {
                     console.error('-----ERROR not complete:' + readyState);

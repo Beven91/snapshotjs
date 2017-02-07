@@ -2,19 +2,35 @@
 
 var program = require('commander');
 var pkg = require('../package');
+var path = require('path');
+var urlParser = require('url');
 var snapshot = require('../index.js');
 
 // options
 program
     .version(pkg.version)
-    .option('-u, --url', 'web url')
-    .option('-o, --out', 'file path of the snapshot image')
-    .option('-w, --width', 'width of the snapshot image')
-    .option('-h, --height', 'height of the snapshot image')
-    .option('-q, --quality', 'quality of the snapshot image')
+    .option('-u, --url [value]', 'snapshot url', program.string)
+    .option('-o, --out [value]', 'file path of the snapshot image')
+    .option('-w, --width [value]', 'width of the snapshot image')
+    .option('-h, --height [value]', 'height of the snapshot image')
+    .option('-q, --quality [value]', 'quality of the snapshot image')
 
 // parse argv
 program.parse(process.argv);
+
+program.on('--help', function() {
+    console.log('  Examples:');
+    console.log('');
+    console.log('    $ snapshot  -u http://www.baidu.com/ -o c:/a.png');
+    console.log('');
+});
+
+if (!program.url) {
+    return console.error("必须设置要截屏的url 例如: -u http://www.baidu.com/");
+}
+var url = program.url;
+
+var out = program.out || path.resolve('snapshot', urlParser.parse(url).host.replace(/(\.|\/|:)/g, '_') + '.png');
 
 var options = {
     width: program.width,
@@ -23,9 +39,9 @@ var options = {
 }
 
 snapshot
-    .capture(program.url, program.out, options)
+    .capture(url, out, options)
     .then(function(data) {
         console.log(JSON.stringify(data));
-    }).catch(function(ex) {
-        console.error(ex.message);
+    }).catch(function(error) {
+        console.error(error);
     })

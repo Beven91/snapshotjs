@@ -4,6 +4,7 @@
 .idea/
 out/
 dist/
+snapshot/
 target/
 node_modules/
 bower_modules/

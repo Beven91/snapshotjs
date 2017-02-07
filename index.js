@@ -16,7 +16,7 @@ var Promise = dantejs.Promise;
 var defaultOptions = {
     width: 1920,
     height: 1080,
-    quality: .8,
+    quality: .6,
     format: 'png'
 }
 
@@ -36,17 +36,23 @@ function Snapshot() {
 Snapshot.prototype.capture = function(url, file, options) {
     options = options || defaultOptions;
     return new Promise(function(resolve, reject) {
-        var cp = spawn(binPath, [path.resolve('phantomjs/capture.js'), url, file, JSON.stringify(options)]);
-        var error = null;
-        var output = [];
-        cp.on('error', function(err) {
-            error = err;
+        console.log('start ' + url + ' > ' + file);
+        var cp = spawn(binPath, [path.join(__dirname, 'phantomjs/capture.js'), url, file, JSON.stringify(options)]);
+        var error = '';
+        var result = [];
+        cp.stderr.on('data', function(err) {
+            error = new String(err);
         })
         cp.stdout.on('data', function(data) {
-            output.push(data);
+            data = new String(data);
+            if (data.toLowerCase().indexOf("error") > -1) {
+                error = error + data;
+            } else {
+                result.push(data);
+            }
         });
         cp.on('close', function(code) {
-            error ? reject(error) : resolve(JSON.parse(output.join('')));
+            error ? reject(error) : resolve(result.join('\n'));
         });
         process.on('SIGTERM', function() {
             cp.kill('SIGTERM')
