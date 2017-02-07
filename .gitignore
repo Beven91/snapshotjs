@@ -1,0 +1,15 @@
+.classpath
+.project
+.idea
+.idea/
+out/
+dist/
+target/
+node_modules/
+bower_modules/
+.sass-cache/
+/release/
+npm-debug.log
+workspace.xml
+Thumbs.db
+docs/

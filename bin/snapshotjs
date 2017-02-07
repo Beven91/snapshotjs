@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var pkg = require('../package');
+var snapshot = require('../index.js');
+
+// options
+program
+    .version(pkg.version)
+    .option('-u, --url', 'web url')
+    .option('-o, --out', 'file path of the snapshot image')
+    .option('-w, --width', 'width of the snapshot image')
+    .option('-h, --height', 'height of the snapshot image')
+    .option('-q, --quality', 'quality of the snapshot image')
+
+// parse argv
+program.parse(process.argv);
+
+var options = {
+    width: program.width,
+    height: program.height,
+    quality: program.quality
+}
+
+snapshot
+    .capture(program.url, program.out, options)
+    .then(function(data) {
+        console.log(JSON.stringify(data));
+    }).catch(function(ex) {
+        console.error(ex.message);
+    })

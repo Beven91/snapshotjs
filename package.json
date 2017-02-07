@@ -1,0 +1,35 @@
+{
+  "name": "snapshotjs",
+  "version": "1.0.0",
+  "description": "a web snapshot util",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -t 10000"
+  },
+  "bin": {
+    "snapshot": "./bin/snapshotjs"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "dantejs": "^1.0.11",
+    "phantomjs": "^2.1.7",
+    "webpage": "^0.3.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Beven91/snapshotjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Beven91/snapshotjs/issues"
+  },
+  "homepage": "https://github.com/Beven91/snapshotjs#readme"
+}
