@@ -25,9 +25,9 @@
    
 ```js
 
-   var snapshot  = require('snapshot');
-	
-   snapshot.capture('https://www.baidu.com','c:/snapshot/baidu.png',{});    
+var snapshot  = require('snapshot');
+
+snapshot.capture('https://www.baidu.com','c:/snapshot/baidu.png',{});    
 	    
 ```
     
