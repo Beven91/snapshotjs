@@ -19,7 +19,7 @@
 	
    全局模式:
    
-   	snapshot -u=https://www.baidu.com -o=c:/snapshot/baidu.png
+	snapshot -u=https://www.baidu.com -o=c:/snapshot/baidu.png
 
    本地模式:
    
