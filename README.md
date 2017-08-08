@@ -1,4 +1,4 @@
-## dsnapshotjs
+## snapshotjs
 
 ### 一、简介
 
